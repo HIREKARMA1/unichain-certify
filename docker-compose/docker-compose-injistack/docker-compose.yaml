@@ -20,7 +20,7 @@ services:
       - 8090:8090
     environment:
       - container_user=mosip
-      - active_profile_env=default, certify-postgres-school
+      - active_profile_env=default, postgres-school
       - SPRING_CONFIG_NAME=certify
       - SPRING_CONFIG_LOCATION=/home/mosip/config/
       - enable_certify_artifactory=false
