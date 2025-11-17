@@ -11,7 +11,7 @@ OAuthDetailsRequestForMockIDANegTC:
       input: '{
         "requestTime": "$TIMESTAMP$",
         "clientId": "$ID:ESignet_CreateOIDCClientV2_ForMockIDA_all_Valid_Smoke_sid_clientId$",
-        "scope": "mock_identity_vc_ldp",
+        "scope": "mosip_identity_vc_ldp",
         "responseType": "code",
         "redirectUri": "$IDPREDIRECTURI$",
         "display": "popup",

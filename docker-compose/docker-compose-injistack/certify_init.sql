@@ -188,7 +188,7 @@ VALUES (
     NULL,
     '[{"name": "Farmer Verifiable Credential", "locale": "en", "logo": {"url": "https://mosip.github.io/inji-config/logos/agro-vertias-logo.png", "alt_text": "Farmer Credential Logo"}, "background_color": "#12107c", "text_color": "#FFFFFF", "background_image": { "uri": "https://mosip.github.io/inji-config/logos/agro-vertias-logo.png" }}]'::JSONB,
     ARRAY['fullName','mobileNumber','dateOfBirth','gender','state','district','villageOrTown','postalCode','landArea','landOwnershipType','primaryCropType','secondaryCropType','farmerID'],
-    'mock_identity_vc_ldp',
+    'mosip_identity_vc_ldp',
     ARRAY['did:jwk'],
     ARRAY['Ed25519Signature2020'],
     '{"jwt": {"proof_signing_alg_values_supported": ["RS256", "ES256"]}}'::JSONB,
