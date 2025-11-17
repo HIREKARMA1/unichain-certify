@@ -266,4 +266,58 @@ CREATE INDEX IF NOT EXISTS idx_ledger_cr_dtimes ON certify.ledger(cr_dtimes);
 CREATE INDEX IF NOT EXISTS idx_gin_ledger_indexed_attrs ON certify.ledger USING GIN (indexed_attributes);
 CREATE INDEX IF NOT EXISTS idx_gin_ledger_status_details ON certify.ledger USING GIN (credential_status_details);
 
-CREATE TABLE IF NOT EXISTS certify.credent...
+CREATE TABLE IF NOT EXISTS certify.credential_status_transaction (
+    transaction_log_id SERIAL PRIMARY KEY,
+    credential_id VARCHAR(255) NOT NULL,
+    status_purpose VARCHAR(100),
+    status_value boolean,
+    status_list_credential_id VARCHAR(255),
+    status_list_index BIGINT,
+    cr_dtimes TIMESTAMP NOT NULL DEFAULT NOW(),
+    upd_dtimes TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_cst_credential_id ON certify.credential_status_transaction(credential_id);
+CREATE INDEX IF NOT EXISTS idx_cst_status_purpose ON certify.credential_status_transaction(status_purpose);
+CREATE INDEX IF NOT EXISTS idx_cst_status_list_credential_id ON certify.credential_status_transaction(status_list_credential_id);
+CREATE INDEX IF NOT EXISTS idx_cst_status_list_index ON certify.credential_status_transaction(status_list_index);
+CREATE INDEX IF NOT EXISTS idx_cst_cr_dtimes ON certify.credential_status_transaction(cr_dtimes);
+CREATE INDEX IF NOT EXISTS idx_cst_status_value ON certify.credential_status_transaction(status_value);
+
+CREATE TABLE IF NOT EXISTS certify.status_list_available_indices (
+    id SERIAL PRIMARY KEY,
+    status_list_credential_id VARCHAR(255) NOT NULL,
+    list_index BIGINT NOT NULL,
+    is_assigned BOOLEAN NOT NULL DEFAULT FALSE,
+    cr_dtimes TIMESTAMP NOT NULL DEFAULT NOW(),
+    upd_dtimes TIMESTAMP,
+    CONSTRAINT fk_status_list_credential FOREIGN KEY(status_list_credential_id)
+        REFERENCES certify.status_list_credential(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT uq_list_id_and_index UNIQUE (status_list_credential_id, list_index)
+);
+
+CREATE INDEX IF NOT EXISTS idx_sla_available_indices
+    ON certify.status_list_available_indices (status_list_credential_id, is_assigned, list_index)
+    WHERE is_assigned = FALSE;
+
+CREATE INDEX IF NOT EXISTS idx_sla_status_list_credential_id ON certify.status_list_available_indices(status_list_credential_id);
+CREATE INDEX IF NOT EXISTS idx_sla_is_assigned ON certify.status_list_available_indices(is_assigned);
+CREATE INDEX IF NOT EXISTS idx_sla_list_index ON certify.status_list_available_indices(list_index);
+CREATE INDEX IF NOT EXISTS idx_sla_cr_dtimes ON certify.status_list_available_indices(cr_dtimes);
+
+CREATE TABLE IF NOT EXISTS certify.shedlock (
+    name VARCHAR(64),
+    lock_until TIMESTAMPTZ(3) NOT NULL,
+    locked_at TIMESTAMPTZ(3) NOT NULL,
+    locked_by VARCHAR(255) NOT NULL,
+    PRIMARY KEY (name)
+);
+
+-- FIXED COMMENT SECTION
+COMMENT ON TABLE certify.shedlock IS 'Table for managing distributed locks using ShedLock library.';
+COMMENT ON COLUMN certify.shedlock.name IS 'Unique name of the lock.';
+COMMENT ON COLUMN certify.shedlock.lock_until IS 'Timestamp until which the lock is held. NULL if not locked.';
+COMMENT ON COLUMN certify.shedlock.locked_at IS 'Timestamp when the lock was acquired. NULL if not locked.';
+COMMENT ON COLUMN certify.shedlock.locked_by IS 'Identifier of the node/process that holds the lock. NULL if not locked.';
