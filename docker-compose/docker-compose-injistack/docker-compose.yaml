@@ -71,7 +71,8 @@ services:
       - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
       - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
-
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   inji-web:
     container_name: 'inji-web'
     image: mosipid/inji-web:0.11.0
