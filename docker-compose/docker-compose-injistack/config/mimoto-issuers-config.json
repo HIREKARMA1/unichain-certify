@@ -16,12 +16,12 @@
           "language": "en"
         }
       ],
-      "client_id": "wallet-demo",
+      "client_id": "wallet-demo-client1",
       "redirect_uri": "io.mosip.residentapp.inji://oauthredirect",
       "token_endpoint": "http://localhost:8099/v1/mimoto/get-token/Farmer",
       "authorization_audience": "http://host.docker.internal:8088/v1/esignet/oauth/v2/token",
       "proxy_token_endpoint": "http://host.docker.internal:8088/v1/esignet/oauth/v2/token",
-      "client_alias": "wallet-demo-client",
+      "client_alias": "hirekarma",
       "qr_code_type": "EmbeddedVC",
       "enabled": "true",
       "wellknown_endpoint": "http://certify-nginx:80/.well-known/openid-credential-issuer"
