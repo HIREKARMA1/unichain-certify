@@ -20,7 +20,7 @@ services:
       - 8090:8090
     environment:
       - container_user=mosip
-      - active_profile_env=default, postgres-school
+      - active_profile_env=default, postgres-school, postgres-event
       - SPRING_CONFIG_NAME=certify
       - SPRING_CONFIG_LOCATION=/home/mosip/config/
       - enable_certify_artifactory=false
@@ -30,6 +30,7 @@ services:
       - ./config/certify-default.properties:/home/mosip/config/certify-default.properties
       - ./config/certify-csvdp-farmer.properties:/home/mosip/config/certify-csvdp-farmer.properties
       - ./config/certify-postgres-school.properties:/home/mosip/config/certify-postgres-school.properties
+      - ./config/certify-postgres-event.properties:/home/mosip/config/certify-postgres-event.properties
       - ./config/certify-mock-mdl.properties:/home/mosip/config/certify-mock-mdl.properties
       - ./data/CERTIFY_PKCS12:/home/mosip/CERTIFY_PKCS12
       # This can be disabled if one uses plugins included in inji-certify-with-plugins docker image.

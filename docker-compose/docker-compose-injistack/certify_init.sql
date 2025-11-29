@@ -198,6 +198,36 @@ VALUES (
     ARRAY['revocation'],
     NOW(),
     NULL
+),
+
+(
+    'EventCredential',
+    gen_random_uuid()::VARCHAR(255),
+    'active',
+    'ewogICAgICAgICAgIkBjb250ZXh0IjogWwogICAgICAgICAgICAgICJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsCiAgICAgICAgICAgICAgImh0dHBzOi8vaGlyZWthcm1hMS5naXRodWIuaW8vdGVtcGZpbGVzL2RpcmVjdG9yeS9FdmVudF9naXRfcGFnZS5qc29uIiwKICAgICAgICAgICAgICAiaHR0cHM6Ly93M2lkLm9yZy9zZWN1cml0eS9zdWl0ZXMvZWQyNTUxOS0yMDIwL3YxIgogICAgICAgICAgXSwKICAgICAgICAgICJpc3N1ZXIiOiAiJHtfaXNzdWVyfSIsCiAgICAgICAgICAidHlwZSI6IFsKICAgICAgICAgICAgICAiVmVyaWZpYWJsZUNyZWRlbnRpYWwiLAogICAgICAgICAgICAgICJFdmVudENyZWRlbnRpYWwiCiAgICAgICAgICBdLAogICAgICAgICAgImlzc3VhbmNlRGF0ZSI6ICIke3ZhbGlkRnJvbX0iLAogICAgICAgICAgImV4cGlyYXRpb25EYXRlIjogIiR7dmFsaWRVbnRpbH0iLAogICAgICAgICAgImNyZWRlbnRpYWxTdWJqZWN0IjogewogICAgICAgICAgICAgICJpZCI6ICIke19ob2xkZXJJZH0iLAkJCQogICAgICAgICAgICAgICJldmVudF9pZCI6ICIke2V2ZW50X2lkfSIsCiAgICAgICAgICAgICAgImV2ZW50X25hbWUiOiAiJHtldmVudF9uYW1lfSIsCiAgICAgICAgICAgICAgImV2ZW50X2RhdGUiOiAiJHtldmVudF9kYXRlfSIsCiAgICAgICAgICAgICAgImdlbmRlciI6ICIke2dlbmRlcn0iLAogICAgICAgICAgICAgICJvcmdhbml6ZXIiOiAiJHtvcmdhbml6ZXJ9IiwKICAgICAgICAgICAgICAiY29udGFjdCI6ICIke2NvbnRhY3R9IgogICAgICAgICAgfQogICAgIH0=',
+    NULL,
+    NULL,
+    'https://www.w3.org/2018/credentials/v1',
+    'EventCredential,VerifiableCredential',
+    'ldp_vc',
+    'did:web:hirekarma1.github.io:tempfiles:directory',
+    'CERTIFY_VC_SIGN_ED25519',
+    'ED25519_SIGN',
+    'EdDSA',
+    'Ed25519Signature2020',
+    NULL,
+    '[{"name": "Event Verifiable Credential", "locale": "en", "logo": {"url": "https://mosip.github.io/inji-config/logos/event-logo.png", "alt_text": "Event Credential Logo"}, "background_color": "#FF6B35", "text_color": "#FFFFFF", "background_image": { "uri": "https://mosip.github.io/inji-config/logos/event-background.png" }}]'::JSONB,
+    ARRAY['event_id','event_name','event_date','gender','organizer','contact'],
+    'mosip_identity_vc_ldp',
+    ARRAY['did:jwk'],
+    ARRAY['Ed25519Signature2020'],
+    '{"jwt": {"proof_signing_alg_values_supported": ["RS256", "ES256"]}}'::JSONB,
+    '{"event_id": {"display": [{"name": "Event ID", "locale": "en"}]}, "event_name": {"display": [{"name": "Event Name", "locale": "en"}]}, "event_date": {"display": [{"name": "Event Date", "locale": "en"}]}, "gender": {"display": [{"name": "Gender", "locale": "en"}]}, "organizer": {"display": [{"name": "Organizer", "locale": "en"}]}, "contact": {"display": [{"name": "Phone Number", "locale": "en"}]}}'::JSONB,
+    NULL,
+    '[{"mosip.certify.mock.data-provider.csv.identifier-column": "event_id", "mosip.certify.mock.data-provider.csv.data-columns": "event_id,event_name,event_date,gender,organizer,contact", "mosip.certify.mock.data-provider.csv-registry-uri": "/home/mosip/config/event_identity_data.csv"}]'::JSONB,
+    ARRAY['revocation'],
+    NOW(),
+    NULL
 );
 
 CREATE TABLE certify.school_data (
@@ -214,6 +244,21 @@ INSERT INTO certify.school_data VALUES
     ('2154189532','John Doe','2010-05-15','Male','Jane Doe','1234567890'),
     ('8038618701','Emma Smith','2012-08-22','Female','Mark Smith','9876543210'),
     ('123456','Liam Brown','2009-12-30','Male','Sarah Brown','4567891230');
+
+CREATE TABLE certify.event_data (
+    event_id VARCHAR(36) NOT NULL,
+    event_name VARCHAR(255),
+    event_date DATE,
+    gender VARCHAR(50),
+    organizer VARCHAR(255),
+    contact VARCHAR(20),
+    CONSTRAINT pk_event_id_code PRIMARY KEY (event_id)
+);
+
+INSERT INTO certify.event_data VALUES
+    ('2154189532','John Doe','2025-12-15','Male','Jane Doe','1234567890'),
+    ('8038618701','Emma Smith','2025-12-22','Female','Mark Smith','9876543210'),
+    ('123456','Liam Brown','2025-12-30','Male','Sarah Brown','4567891230');
 
 INSERT INTO certify.key_policy_def(APP_ID,KEY_VALIDITY_DURATION,PRE_EXPIRE_DAYS,ACCESS_ALLOWED,IS_ACTIVE,CR_BY,CR_DTIMES) VALUES
 ('ROOT',2920,1125,'NA',true,'mosipadmin',now()),

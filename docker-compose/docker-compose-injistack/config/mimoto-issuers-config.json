@@ -26,6 +26,33 @@
       "enabled": "true",
       "wellknown_endpoint": "http://certify-nginx:80/.well-known/openid-credential-issuer"
     },
+
+    {
+      "credential_issuer": "Event",
+      "issuer_id": "Event",
+      "protocol": "OpenId4VCI",
+      "display": [
+        {
+          "name": "Event Management",
+          "logo": {
+            "url": "https://mosip.github.io/inji-config/logos/agro-vertias-logo.png",
+            "alt_text": "event-logo"
+          },
+          "title": "Event Management",
+          "description": "Download Event Credentials",
+          "language": "en"
+        }
+      ],
+      "client_id": "wallet-demo-client1",
+      "redirect_uri": "io.mosip.residentapp.inji://oauthredirect",
+      "token_endpoint": "http://localhost:8099/v1/mimoto/get-token/Event",
+      "authorization_audience": "http://host.docker.internal:8088/v1/esignet/oauth/v2/token",
+      "proxy_token_endpoint": "http://host.docker.internal:8088/v1/esignet/oauth/v2/token",
+      "client_alias": "hirekarma",
+      "qr_code_type": "EmbeddedVC",
+      "enabled": "true",
+      "wellknown_endpoint": "http://certify-nginx:80/.well-known/openid-credential-issuer"
+    },
     {
       "issuer_id": "MockMdl",
       "credential_issuer": "MockMdl",
